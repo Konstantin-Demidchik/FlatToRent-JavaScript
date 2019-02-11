@@ -1,0 +1,135 @@
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+}
+
+#scrollToTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ff9b0b;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: 90%;
+  right: 50px;
+  font-size: 27px;
+  box-shadow: 5px 5px 10px 2px #bdc3c7;
+  opacity: 0;
+  transition: all 1s;
+  cursor: pointer;
+}
+
+
+#show {
+  background-color: #fff;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#show div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+}
+
+#show div i {
+    font-size: 30px;
+    margin-right: 4px;
+}
+
+#show div p {
+  border-radius: 50%;
+  background-color: #ff9b0b;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  margin-top: 25px;
+}
+
+
+#header {
+  height: 400px;
+  background: url(../img/bg.png)no-repeat center fixed;
+  background-size: cover;
+  background-color: #f4f4f4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#header h1{
+  color: #fff;
+  font-size: 80px;
+  text-underline-position: left;
+}
+
+#header h1 span{
+  text-decoration: underline;
+  text-decoration-color: #ff9b0b;
+}
+
+
+
+#search_items {
+  background-color: #e8e8e8;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+#search_items select {
+  margin-right: 20px;
+  border: 1px solid #dad2d2;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  transition: all .25s;
+}
+
+#search_items select:hover {
+  border: 1px solid #ff9b0b;
+}
+
+#search_city input[name="search"] {
+  margin-right: 20px;
+  padding: 10px 10px 10px 35px;
+  border-radius: 5px;
+  transition: all .25s;
+  border: 1px solid #dad2d2;
+}
+
+#search_city input[name="search"]:hover {
+    border: 1px solid #ff9b0b;
+}
+
+#search_city i {
+  position: relative;
+  right: -30px;
+  color: #ff9b0b;
+}
+
+#search_button {
+  font-weight: 700;
+  border: 1px solid #dad2d2;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #ff9b0b;
+}
