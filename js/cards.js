@@ -7,10 +7,14 @@ class CardsHouse {
     this.search_button = document.getElementById('search_button');
     this.search_select_buy_or_rent = document.getElementById('search_select_buy_or_rent');
     this.search_select_house_or_flat = document.getElementById('search_select_house_or_flat');
+    this.show_button_basket = document.getElementById('show__button-basket');
 
+    this.cardsFound = [];
     this.response = null;
+    this.basket = [];
 
     this.search_button.addEventListener('click', this.startSearch.bind(this));
+    this.show_button_basket.addEventListener('click', this.showBasket.bind(this));
   //  this.country.addEventListener('change', (e) => this.country = e.target.value);
 
   }
@@ -49,17 +53,33 @@ class CardsHouse {
     //  let url = `https://api.nestoria.com.br/api?encoding=json&action=search_listings&listing_type=buy&country=br&place_name=Moscow&pretty=1&callback=(${onDone})`;
     //https://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=buy&place_name=Galston&property_type=flat&bedroom_min=&bedroom_max=&bathroom_min=&bathroom_max=&price_min=&price_max=&callback=callbackFunc
 
-    let scriptTransportInHead = function(url){
+    let scriptTransportInHead = (url) => {
         let scriptElement = document.createElement("script");
         scriptElement.src = url;
         document.body.appendChild(scriptElement);
     }
     scriptTransportInHead(url);
+  }
+
+  showBasket() {
+    const canvasForBasket = document.createElement('div');
+    canvasForBasket.className = 'canvas_for_basket';
+
+    const contentBasket = document.createElement('div');
+    contentBasket.className = 'canvas_for_basket__content';
+    this.basket.map((card) => {
+      contentBasket.appendChild(card.cloneNode(true));  // copy / card is the link on main content
+    })
+    canvasForBasket.appendChild(contentBasket);
+
+    const closeCanvasForBasket = document.createElement('div');
+    closeCanvasForBasket.innerHTML = "<i class='fas fa-times'></i>";
+    closeCanvasForBasket.style.color = "red";
+    closeCanvasForBasket.addEventListener('click', () => canvasForBasket.remove());
+    canvasForBasket.appendChild(closeCanvasForBasket);
 
 
-
-
-
+    document.body.appendChild(canvasForBasket);
   }
 
   render() {
@@ -68,9 +88,10 @@ class CardsHouse {
       {
         document.getElementById('loader').remove();
 
-        this.response.listings.map((cardData) => {
+          this.cardsFound = this.response.listings.map((cardData, index) => {
           const offerCard = document.createElement("div");
           offerCard.className = 'offer-card';
+          offerCard.id = index;
 
           const offerCard_image = document.createElement("img");
           offerCard_image.src = cardData.img_url;
@@ -82,10 +103,14 @@ class CardsHouse {
 
           document.getElementById('main').appendChild(offerCard);
 
+          return offerCard;
         });
+
       }
       else
         document.getElementById('loader').innerHTML = "No Result";
+
+
 
       function createRigthBar(cardData) {
         const rigthBar = document.createElement("div");
@@ -114,6 +139,7 @@ class CardsHouse {
         const rigthBar_saveToBasketButton = document.createElement("button");
         rigthBar_saveToBasketButton.className = 'offer-card__save-to-basket-button';
         rigthBar_saveToBasketButton.innerHTML = '<i class="far fa-bookmark saved-btn"></i>';
+        rigthBar_saveToBasketButton.addEventListener('click', savedToBasket);            // save to basket
         rigthBar.appendChild(rigthBar_saveToBasketButton);
 
         const rigthBar_moreInfoButton = document.createElement("button");
@@ -123,6 +149,23 @@ class CardsHouse {
 
 
         return rigthBar;
+      }
+
+      function savedToBasket(e) {
+
+        let selectedСard = e.target;
+        if(selectedСard.className == 'fas fa-bookmark' || selectedСard.tagName == 'BUTTON') return;
+
+        selectedСard.className = 'fas fa-bookmark';
+
+        while(selectedСard.className !== 'offer-card')
+          selectedСard = selectedСard.parentElement ;
+
+        cards.basket.push(selectedСard);
+
+        document.getElementById('count_basket').innerHTML++;          // inc couner in basket
+
+        console.log(cards.basket);
       }
   }
 

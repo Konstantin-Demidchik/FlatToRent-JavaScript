@@ -40,6 +40,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-right: 40px;
+  cursor: pointer;
 }
 
 #show div i {
@@ -60,6 +61,26 @@ body {
   margin-top: 25px;
 }
 
+.canvas_for_basket {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.97);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+  transition: all 2s;
+}
+
+.canvas_for_basket__content {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
 
 #header {
   height: 400px;
