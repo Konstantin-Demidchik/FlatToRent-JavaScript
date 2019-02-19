@@ -61,8 +61,10 @@ body {
   margin-top: 25px;
 }
 
+
+
 .canvas_for_basket {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
@@ -80,6 +82,15 @@ body {
 .canvas_for_basket__content {
   padding-top: 25px;
   padding-bottom: 25px;
+}
+
+.canvas_for_basket__close {
+  color: #fff;
+  position: absolute;
+  left: 94%;
+  top: 25px;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 #header {
