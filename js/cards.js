@@ -68,13 +68,26 @@ class CardsHouse {
     const contentBasket = document.createElement('div');
     contentBasket.className = 'canvas_for_basket__content';
     this.basket.map((card) => {
-      contentBasket.appendChild(card.cloneNode(true));  // copy / card is the link on main content
+
+      let cardClone = card.cloneNode(true);
+      cardClone.getElementsByClassName('fas fa-bookmark')[0].className = 'fas fa-trash-alt';
+      cardClone.getElementsByClassName('fas fa-trash-alt')[0].addEventListener('click', () => {
+        cards.basket.map((card, index) => {
+          if(card.id == cardClone.id) {
+            cards.basket.splice(index, 1);
+            document.getElementById('count_basket').innerHTML--;
+            cardClone.remove();
+            card.getElementsByClassName('fas fa-bookmark')[0].className = 'far fa-bookmark saved-btn';
+          }
+        });
+      });
+      contentBasket.appendChild(cardClone);  // copy / card is the link on main content
     })
     canvasForBasket.appendChild(contentBasket);
 
     const closeCanvasForBasket = document.createElement('div');
     closeCanvasForBasket.innerHTML = "<i class='fas fa-times'></i>";
-    closeCanvasForBasket.style.color = "red";
+    closeCanvasForBasket.className = 'canvas_for_basket__close';
     closeCanvasForBasket.addEventListener('click', () => canvasForBasket.remove());
     canvasForBasket.appendChild(closeCanvasForBasket);
 
@@ -84,7 +97,7 @@ class CardsHouse {
 
   render() {
     console.log(this.response);
-    if(this.response.status_code == 200)
+    if(this.response.application_response_code == 101)
       {
         document.getElementById('loader').remove();
 
@@ -107,8 +120,10 @@ class CardsHouse {
         });
 
       }
-      else
+      else {
         document.getElementById('loader').innerHTML = "No Result";
+      }
+
 
 
 
@@ -153,19 +168,35 @@ class CardsHouse {
 
       function savedToBasket(e) {
 
-        let selectedСard = e.target;
-        if(selectedСard.className == 'fas fa-bookmark' || selectedСard.tagName == 'BUTTON') return;
-
-        selectedСard.className = 'fas fa-bookmark';
-
-        while(selectedСard.className !== 'offer-card')
+        let selectedСard = e.target;                    // e.targe this saved button to basket
+        while(selectedСard.className !== 'offer-card')            // selectedСard this current card with id
           selectedСard = selectedСard.parentElement ;
+
+
+        if(e.target.tagName == 'BUTTON') return;
+
+        if(e.target.className == 'fas fa-bookmark') {
+          e.target.className = "far fa-bookmark saved-btn";
+          cards.basket.map((card, index) => {
+            if(card.id == selectedСard.id) {
+              cards.basket.splice(index, 1);
+              document.getElementById('count_basket').innerHTML--;
+            }
+          });
+
+          return;
+        }
+
+
+
+        e.target.className = 'fas fa-bookmark';
+
+
 
         cards.basket.push(selectedСard);
 
         document.getElementById('count_basket').innerHTML++;          // inc couner in basket
 
-        console.log(cards.basket);
       }
   }
 
